@@ -1,0 +1,2 @@
+export const UPDATE_LAYOUT_NAV = "UPDATE_LAYOUT_NAV";
+export const SEND_MESSAGE = "SEND_MESSAGE";
