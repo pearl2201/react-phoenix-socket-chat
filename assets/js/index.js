@@ -4,11 +4,12 @@ import App from './containers/App'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 
-import configureStore from './store/configureStore'
+import store from './store/configureStore'
 import rootSaga from './sagas'
 
-const store = configureStore()
+
 store.runSaga(rootSaga)
+
 
 
 const mainContainer = document.getElementById('app')

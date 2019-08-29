@@ -14,6 +14,7 @@
                         'Elixir.WsappWeb.PageView',
                         'Elixir.WsappWeb.RoomStore','Elixir.WsappWeb.Router',
                         'Elixir.WsappWeb.Router.Helpers',
+                        'Elixir.WsappWeb.SettingChannel',
                         'Elixir.WsappWeb.UserChannel',
                         'Elixir.WsappWeb.UserSocket',
                         'Elixir.WsappWeb.UserStore']},
