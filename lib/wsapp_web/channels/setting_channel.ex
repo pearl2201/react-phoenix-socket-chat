@@ -16,6 +16,13 @@ defmodule WsappWeb.SettingChannel do
   end
 
   def handle_in("req_profile", _params, socket) do
-    {:reply, {:ok, %{user: socket.assigns.current_user, room: WsappWeb.RoomStore.get_rooms(WsappWeb.RoomStore)}}, socket}
+    {:reply, {:ok, %{user: socket.assigns.current_user}}, socket}
+  end
+
+  def handle_in("create_chatroom", %{"channel" => channel}, socket) do
+    room =
+      WsappWeb.RoomStore.create_room(WsappWeb.RoomStore, channel, socket.assigns.current_user.idx)
+
+    {:reply, {:ok, %{"channel" => room}}, socket}
   end
 end

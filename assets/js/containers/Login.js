@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { ConnectSocket } from '../actions/index'
+import { ConnectSocket } from '../ducks/auth'
 class Login extends React.Component {
 
     constructor(props) {

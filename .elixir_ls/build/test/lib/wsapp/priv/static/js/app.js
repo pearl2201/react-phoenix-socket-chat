@@ -1196,45 +1196,6 @@
 
 /***/ }),
 
-/***/ "./js/actions/index.js":
-/*!*****************************!*\
-  !*** ./js/actions/index.js ***!
-  \*****************************/
-/*! exports provided: UPDATE_LAYOUT_NAV, SEND_MESSAGE, CONNECT_SOCKET, DISCONNECT_SOCKET, GET_CHANNEL_LIST, CREATE_CHANNEL, CONNECT_CHANNEL, CONNECT_SUCCESS, GET_INFO_USER_SUCCESS, DISCONNECT_CHANNEL, ConnectSocket */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_LAYOUT_NAV", function() { return UPDATE_LAYOUT_NAV; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SEND_MESSAGE", function() { return SEND_MESSAGE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CONNECT_SOCKET", function() { return CONNECT_SOCKET; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DISCONNECT_SOCKET", function() { return DISCONNECT_SOCKET; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_CHANNEL_LIST", function() { return GET_CHANNEL_LIST; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_CHANNEL", function() { return CREATE_CHANNEL; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CONNECT_CHANNEL", function() { return CONNECT_CHANNEL; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CONNECT_SUCCESS", function() { return CONNECT_SUCCESS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_INFO_USER_SUCCESS", function() { return GET_INFO_USER_SUCCESS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DISCONNECT_CHANNEL", function() { return DISCONNECT_CHANNEL; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ConnectSocket", function() { return ConnectSocket; });
-var UPDATE_LAYOUT_NAV = "UPDATE_LAYOUT_NAV";
-var SEND_MESSAGE = "SEND_MESSAGE";
-var CONNECT_SOCKET = "CONNECT_SOCKET";
-var DISCONNECT_SOCKET = "DISCONNECT_SOCKET";
-var GET_CHANNEL_LIST = "GET_CHANNEL_LIST";
-var CREATE_CHANNEL = "CREATE_CHANNEL";
-var CONNECT_CHANNEL = "CONNECT_CHANNEL";
-var CONNECT_SUCCESS = "CONNECT_SUCCESS";
-var GET_INFO_USER_SUCCESS = "GET_INFO_USER_SUCCESS";
-var DISCONNECT_CHANNEL = "CONNECT_CHANNEL";
-function ConnectSocket(username) {
-  return {
-    type: CONNECT_SOCKET,
-    username: username
-  };
-}
-
-/***/ }),
-
 /***/ "./js/app.js":
 /*!*******************!*\
   !*** ./js/app.js ***!
@@ -1282,6 +1243,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _Dashboard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Dashboard */ "./js/containers/Dashboard.js");
 /* harmony import */ var _Login__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Login */ "./js/containers/Login.js");
+/* harmony import */ var _ducks_auth__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../ducks/auth */ "./js/ducks/auth.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1306,6 +1268,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var App =
 /*#__PURE__*/
 function (_Component) {
@@ -1318,6 +1281,15 @@ function (_Component) {
   }
 
   _createClass(App, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var self = this;
+
+      window.onbeforeunload = function () {
+        self.props.dispatch(Object(_ducks_auth__WEBPACK_IMPORTED_MODULE_5__["DisconnectSocket"])());
+      }.bind(this);
+    }
+  }, {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["BrowserRouter"], null, !this.props.isAuth && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
@@ -1363,6 +1335,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _ducks_chatroom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ducks/chatroom */ "./js/ducks/chatroom.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1373,13 +1346,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -1389,16 +1363,50 @@ var Dashboard =
 function (_React$Component) {
   _inherits(Dashboard, _React$Component);
 
-  function Dashboard() {
+  function Dashboard(props) {
+    var _this;
+
     _classCallCheck(this, Dashboard);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Dashboard).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Dashboard).call(this, props));
+    _this.state = {
+      channelName: ''
+    };
+    _this.handleConnect = _this.handleConnect.bind(_assertThisInitialized(_this));
+    _this.handleChannelNameChange = _this.handleChannelNameChange.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(Dashboard, [{
+    key: "handleChannelNameChange",
+    value: function handleChannelNameChange(e) {
+      this.setState({
+        channelName: e.target.value
+      });
+    }
+  }, {
+    key: "handleConnect",
+    value: function handleConnect(e) {
+      this.props.dispatch(Object(_ducks_chatroom__WEBPACK_IMPORTED_MODULE_2__["CreateChatroom"])(this.state.channelName));
+    }
+  }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, " Dashboard ");
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "channel-exists"
+      }, this.props.rooms.map(function (room, key) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          key: room.idx
+        }, "room ");
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "new-channel-wrapper"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "text",
+        onChange: this.handleChannelNameChange,
+        value: this.state.channelName
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handleConnect
+      }, " Create Channel ")));
     }
   }]);
 
@@ -1411,7 +1419,14 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDispatchToProps)(Dashboard));
+function mapStateToProps(state) {
+  console.log(state);
+  return {
+    rooms: state.channel.rooms
+  };
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(Dashboard));
 
 /***/ }),
 
@@ -1427,7 +1442,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _actions_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/index */ "./js/actions/index.js");
+/* harmony import */ var _ducks_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ducks/auth */ "./js/ducks/auth.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1479,7 +1494,7 @@ function (_React$Component) {
   }, {
     key: "handleConnect",
     value: function handleConnect(e) {
-      this.props.dispatch(Object(_actions_index__WEBPACK_IMPORTED_MODULE_2__["ConnectSocket"])(this.state.username));
+      this.props.dispatch(Object(_ducks_auth__WEBPACK_IMPORTED_MODULE_2__["ConnectSocket"])(this.state.username));
     }
   }, {
     key: "render",
@@ -1504,6 +1519,176 @@ function mapDispatchToProps(dispatch) {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(null, mapDispatchToProps)(Login));
+
+/***/ }),
+
+/***/ "./js/ducks/auth.js":
+/*!**************************!*\
+  !*** ./js/ducks/auth.js ***!
+  \**************************/
+/*! exports provided: CONNECT_SOCKET, DISCONNECT_SOCKET, GET_INFO_USER_SUCCESS, CONNECT_SUCCESS, ConnectSocket, DisconnectSocket, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CONNECT_SOCKET", function() { return CONNECT_SOCKET; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DISCONNECT_SOCKET", function() { return DISCONNECT_SOCKET; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_INFO_USER_SUCCESS", function() { return GET_INFO_USER_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CONNECT_SUCCESS", function() { return CONNECT_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ConnectSocket", function() { return ConnectSocket; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DisconnectSocket", function() { return DisconnectSocket; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return auth; });
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var CONNECT_SOCKET = "CONNECT_SOCKET";
+var DISCONNECT_SOCKET = "DISCONNECT_SOCKET";
+var GET_INFO_USER_SUCCESS = "GET_INFO_USER_SUCCESS";
+var CONNECT_SUCCESS = "CONNECT_SUCCESS";
+function ConnectSocket(username) {
+  return {
+    type: CONNECT_SOCKET,
+    username: username
+  };
+}
+function DisconnectSocket() {
+  return {
+    type: DISCONNECT_SOCKET
+  };
+}
+function auth() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    isAuth: false,
+    current_user: {}
+  };
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case CONNECT_SUCCESS:
+      return _objectSpread({}, state, {
+        isAuth: true
+      });
+
+    case GET_INFO_USER_SUCCESS:
+      return _objectSpread({}, state, {
+        current_user: action.user
+      });
+
+    default:
+      return state;
+  }
+}
+
+/***/ }),
+
+/***/ "./js/ducks/channel.js":
+/*!*****************************!*\
+  !*** ./js/ducks/channel.js ***!
+  \*****************************/
+/*! exports provided: CREATE_CHANNEL, GET_CHANNEL_LIST, RECEIVE_NEW_ROOM, RECEIVE_ROOMS, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_CHANNEL", function() { return CREATE_CHANNEL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GET_CHANNEL_LIST", function() { return GET_CHANNEL_LIST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_NEW_ROOM", function() { return RECEIVE_NEW_ROOM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_ROOMS", function() { return RECEIVE_ROOMS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return room; });
+var CREATE_CHANNEL = "CREATE_CHANNEL";
+var GET_CHANNEL_LIST = "GET_CHANNEL_LIST";
+var RECEIVE_NEW_ROOM = "RECEIVE_NEW_ROOM";
+var RECEIVE_ROOMS = "RECEIVE_ROOMS";
+function room() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    rooms: []
+  };
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case RECEIVE_ROOMS:
+      return {
+        rooms: rooms
+      };
+
+    case RECEIVE_NEW_ROOM:
+      var rooms = state.rooms;
+      rooms.push(action.room);
+      return {
+        rooms: rooms
+      };
+
+    default:
+      return state;
+  }
+}
+
+/***/ }),
+
+/***/ "./js/ducks/chatroom.js":
+/*!******************************!*\
+  !*** ./js/ducks/chatroom.js ***!
+  \******************************/
+/*! exports provided: NEW_USER_JOIN_ROOM, USER_EXISTS_ROOM, SEND_MESSAGE, RECEIVE_MESSAGE, CONNECT_CHATROOM, CREATE_CHATROOM, CONNECT_CHATROOM_SUCCESS, DISCONNECT_CHATROOM, DISCONNECT_CHATROOM_SUCCESS, ConnectChatroom, CreateChatroom, DisconnectChatroom, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NEW_USER_JOIN_ROOM", function() { return NEW_USER_JOIN_ROOM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "USER_EXISTS_ROOM", function() { return USER_EXISTS_ROOM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SEND_MESSAGE", function() { return SEND_MESSAGE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECEIVE_MESSAGE", function() { return RECEIVE_MESSAGE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CONNECT_CHATROOM", function() { return CONNECT_CHATROOM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATE_CHATROOM", function() { return CREATE_CHATROOM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CONNECT_CHATROOM_SUCCESS", function() { return CONNECT_CHATROOM_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DISCONNECT_CHATROOM", function() { return DISCONNECT_CHATROOM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DISCONNECT_CHATROOM_SUCCESS", function() { return DISCONNECT_CHATROOM_SUCCESS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ConnectChatroom", function() { return ConnectChatroom; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CreateChatroom", function() { return CreateChatroom; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DisconnectChatroom", function() { return DisconnectChatroom; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return chatroom; });
+var NEW_USER_JOIN_ROOM = "NEW_USER_JOIN_ROOM";
+var USER_EXISTS_ROOM = "USER_EXISTS_ROOM";
+var SEND_MESSAGE = "SEND_MESSAGE";
+var RECEIVE_MESSAGE = "SEND_MESSAGE";
+var CONNECT_CHATROOM = "CONNECT_CHATROOM";
+var CREATE_CHATROOM = "CREACT_CHATROOM";
+var CONNECT_CHATROOM_SUCCESS = "CONNECT_CHATROOM_SUCCESS";
+var DISCONNECT_CHATROOM = "DISCONNECT_CHATROOM";
+var DISCONNECT_CHATROOM_SUCCESS = "DISCONNECT_CHATROOM_SUCCESS";
+function ConnectChatroom(idx) {
+  return {
+    type: CONNECT_CHATROOM,
+    idx: idx
+  };
+}
+function CreateChatroom(channel) {
+  return {
+    type: CREATE_CHATROOM,
+    channel: channel
+  };
+}
+function DisconnectChatroom(channel) {
+  return {
+    type: DISCONNECT_CHATROOM,
+    channel: channel
+  };
+}
+function chatroom() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    currentRoom: {},
+    messages: []
+  };
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    default:
+      return state;
+  }
+}
 
 /***/ }),
 
@@ -1554,59 +1739,17 @@ if (mainContainer) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
-/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions */ "./js/actions/index.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+/* harmony import */ var _ducks_auth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../ducks/auth */ "./js/ducks/auth.js");
+/* harmony import */ var _ducks_channel__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ducks/channel */ "./js/ducks/channel.js");
+/* harmony import */ var _ducks_chatroom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ducks/chatroom */ "./js/ducks/chatroom.js");
 
 
 
-
-function currentLayoutNav() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-    layout: 0
-  };
-  var action = arguments.length > 1 ? arguments[1] : undefined;
-
-  switch (action.type) {
-    case _actions__WEBPACK_IMPORTED_MODULE_1__["UPDATE_LAYOUT_NAV"]:
-      return {
-        layout: action.layout
-      };
-
-    default:
-      return state;
-  }
-}
-
-function auth() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-    isAuth: false,
-    current_user: {}
-  };
-  var action = arguments.length > 1 ? arguments[1] : undefined;
-
-  switch (action.type) {
-    case _actions__WEBPACK_IMPORTED_MODULE_1__["CONNECT_SUCCESS"]:
-      return _objectSpread({}, state, {
-        isAuth: true
-      });
-
-    case _actions__WEBPACK_IMPORTED_MODULE_1__["GET_INFO_USER_SUCCESS"]:
-      return _objectSpread({}, state, {
-        current_user: action.user
-      });
-
-    default:
-      return state;
-  }
-}
 
 var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
-  auth: auth,
-  currentLayoutNav: currentLayoutNav
+  auth: _ducks_auth__WEBPACK_IMPORTED_MODULE_1__["default"],
+  channel: _ducks_channel__WEBPACK_IMPORTED_MODULE_2__["default"],
+  chatroom: _ducks_chatroom__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (rootReducer);
 
@@ -1625,37 +1768,41 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var phoenix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! phoenix */ "../deps/phoenix/priv/static/phoenix.js");
 /* harmony import */ var phoenix__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(phoenix__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! redux-saga/effects */ "./node_modules/redux-saga/dist/redux-saga-effects-npm-proxy.esm.js");
-/* harmony import */ var _actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions */ "./js/actions/index.js");
-/* harmony import */ var redux_saga__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux-saga */ "./node_modules/redux-saga/dist/redux-saga-core-npm-proxy.esm.js");
-/* harmony import */ var _store_configureStore__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store/configureStore */ "./js/store/configureStore.js");
+/* harmony import */ var _ducks_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ducks/auth */ "./js/ducks/auth.js");
+/* harmony import */ var _ducks_chatroom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ducks/chatroom */ "./js/ducks/chatroom.js");
+/* harmony import */ var redux_saga__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! redux-saga */ "./node_modules/redux-saga/dist/redux-saga-core-npm-proxy.esm.js");
+/* harmony import */ var _store_configureStore__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../store/configureStore */ "./js/store/configureStore.js");
 var _marked =
 /*#__PURE__*/
-regeneratorRuntime.mark(watchForMessage),
+regeneratorRuntime.mark(watchForChatMessage),
     _marked2 =
 /*#__PURE__*/
-regeneratorRuntime.mark(watchSendMessage),
+regeneratorRuntime.mark(watchSendChatMessage),
     _marked3 =
 /*#__PURE__*/
-regeneratorRuntime.mark(runLoop),
+regeneratorRuntime.mark(runLoopChatChannel),
     _marked4 =
 /*#__PURE__*/
-regeneratorRuntime.mark(watchChannel),
+regeneratorRuntime.mark(watchChatChannel),
     _marked5 =
 /*#__PURE__*/
-regeneratorRuntime.mark(watchUserInfo),
+regeneratorRuntime.mark(watchForSendInfoQuery),
     _marked6 =
 /*#__PURE__*/
-regeneratorRuntime.mark(watchSendUserInfo),
+regeneratorRuntime.mark(watchForReceiveInfoQuery),
     _marked7 =
 /*#__PURE__*/
-regeneratorRuntime.mark(reqUserInfo),
+regeneratorRuntime.mark(runLoopwatchInfoQuery),
     _marked8 =
 /*#__PURE__*/
-regeneratorRuntime.mark(rootSocket),
+regeneratorRuntime.mark(watchInfoQuery),
     _marked9 =
 /*#__PURE__*/
-regeneratorRuntime.mark(rootAPI),
+regeneratorRuntime.mark(rootSocket),
     _marked10 =
+/*#__PURE__*/
+regeneratorRuntime.mark(rootAPI),
+    _marked11 =
 /*#__PURE__*/
 regeneratorRuntime.mark(rootSaga);
 
@@ -1665,34 +1812,65 @@ regeneratorRuntime.mark(rootSaga);
 
 
 
-function createSocketChannel(channel) {
+
+function createSocketChannel(channel, events, onExit) {
   // `eventChannel` takes a subscriber function
   // the subscriber function takes an `emit` argument to put messages onto the channel
-  return Object(redux_saga__WEBPACK_IMPORTED_MODULE_3__["eventChannel"])(function (emit) {
+  return Object(redux_saga__WEBPACK_IMPORTED_MODULE_4__["eventChannel"])(function (emit) {
     channel.onError(function () {
       return console.log("channel error");
     });
-    channel.on("msg", function (payload) {
-      emit(payload);
-    });
+
+    var _loop = function _loop() {
+      var eventName = _Object$keys[_i];
+      channel.on(eventName, function (payload) {
+        events[eventName](emit, payload);
+      });
+    };
+
+    for (var _i = 0, _Object$keys = Object.keys(events); _i < _Object$keys.length; _i++) {
+      _loop();
+    }
+
     console.log("create channel"); // the subscriber must return an unsubscribe function
     // this will be invoked when the saga calls `channel.close` method
 
     var unsubscribe = function unsubscribe() {
-      channel.leave();
+      channel.leave().receive("ok", function (msg) {
+        return onExit();
+      });
     };
 
     return unsubscribe;
   });
 }
 
-function watchForMessage(channel) {
+function watchForChatMessage(channel) {
   var sagachannel;
-  return regeneratorRuntime.wrap(function watchForMessage$(_context2) {
+  return regeneratorRuntime.wrap(function watchForChatMessage$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {
         case 0:
-          sagachannel = createSocketChannel(channel);
+          sagachannel = createSocketChannel(channel, {
+            'new_user': function new_user(emit, payload) {
+              payload.type = _ducks_chatroom__WEBPACK_IMPORTED_MODULE_3__["NEW_USER_JOIN_ROOM"];
+              emit(payload);
+            },
+            'chat_message': function chat_message(emit, payload) {
+              payload.type = _ducks_chatroom__WEBPACK_IMPORTED_MODULE_3__["RECEIVE_MESSAGE"];
+              emit(payload);
+            },
+            'remove_user': function remove_user(emit, payload) {
+              return function (emit, payload) {
+                payload.type = _ducks_chatroom__WEBPACK_IMPORTED_MODULE_3__["USER_EXISTS_ROOM"];
+                emit(payload);
+              };
+            }
+          }, function () {
+            _store_configureStore__WEBPACK_IMPORTED_MODULE_5__["default"].dispatch({
+              type: _ducks_chatroom__WEBPACK_IMPORTED_MODULE_3__["DISCONNECT_CHATROOM_SUCCESS"]
+            });
+          });
           _context2.next = 3;
           return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["takeEvery"])(sagachannel,
           /*#__PURE__*/
@@ -1701,9 +1879,10 @@ function watchForMessage(channel) {
               while (1) {
                 switch (_context.prev = _context.next) {
                   case 0:
-                    console.log(payload);
+                    _context.next = 2;
+                    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["put"])(payload);
 
-                  case 1:
+                  case 2:
                   case "end":
                     return _context.stop();
                 }
@@ -1719,16 +1898,16 @@ function watchForMessage(channel) {
   }, _marked);
 }
 
-function watchSendMessage(channel) {
+function watchSendChatMessage(channel) {
   var payload;
-  return regeneratorRuntime.wrap(function watchSendMessage$(_context3) {
+  return regeneratorRuntime.wrap(function watchSendChatMessage$(_context3) {
     while (1) {
       switch (_context3.prev = _context3.next) {
         case 0:
           if (false) {}
 
           _context3.next = 3;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["take"])(_actions__WEBPACK_IMPORTED_MODULE_2__["SEND_MESSAGE"]);
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["take"])(_ducks_chatroom__WEBPACK_IMPORTED_MODULE_3__["SEND_MESSAGE"]);
 
         case 3:
           payload = _context3.sent;
@@ -1765,24 +1944,21 @@ function watchSendMessage(channel) {
   }, _marked2, null, [[4, 9]]);
 }
 
-function runLoop(channel) {
-  return regeneratorRuntime.wrap(function runLoop$(_context4) {
+function runLoopChatChannel(channel) {
+  return regeneratorRuntime.wrap(function runLoopChatChannel$(_context4) {
     while (1) {
       switch (_context4.prev = _context4.next) {
         case 0:
-          console.log("run loop");
-
-        case 1:
           if (false) {}
 
-          _context4.next = 4;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["all"])([watchForMessage(channel), watchSendMessage(channel)]);
+          _context4.next = 3;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["all"])([watchForChatMessage(channel), watchSendChatMessage(channel)]);
 
-        case 4:
-          _context4.next = 1;
+        case 3:
+          _context4.next = 0;
           break;
 
-        case 6:
+        case 5:
         case "end":
           return _context4.stop();
       }
@@ -1790,14 +1966,13 @@ function runLoop(channel) {
   }, _marked3);
 }
 
-function watchChannel(socket) {
-  return regeneratorRuntime.wrap(function watchChannel$(_context6) {
+function watchChatChannel(socket) {
+  return regeneratorRuntime.wrap(function watchChatChannel$(_context6) {
     while (1) {
       switch (_context6.prev = _context6.next) {
         case 0:
-          console.log("watchChannel");
-          _context6.next = 3;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["takeEvery"])(_actions__WEBPACK_IMPORTED_MODULE_2__["CONNECT_CHANNEL"],
+          _context6.next = 2;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["takeEvery"])([_ducks_chatroom__WEBPACK_IMPORTED_MODULE_3__["CONNECT_CHATROOM"]],
           /*#__PURE__*/
           regeneratorRuntime.mark(function handleSocket(action) {
             var channel, loopChannel, action_disconnect;
@@ -1806,20 +1981,12 @@ function watchChannel(socket) {
                 switch (_context5.prev = _context5.next) {
                   case 0:
                     channel = socket.channel(action.channel);
-                    channel.join().receive("ok", function (_ref) {
-                      var messages = _ref.messages;
-                      return console.log("catching up", messages);
-                    }).receive("error", function (_ref2) {
-                      var reason = _ref2.reason;
-                      return console.log("failed join", reason);
-                    }).receive("timeout", function () {
-                      return console.log("Networking issue. Still waiting...");
-                    });
-                    channel.push("msg", {
-                      hello: "hello"
-                    }, 10000);
+                    _context5.next = 3;
+                    return channel.join();
+
+                  case 3:
                     _context5.next = 5;
-                    return runLoop(channel);
+                    return runLoopChatChannel(channel);
 
                   case 5:
                     loopChannel = _context5.sent;
@@ -1828,24 +1995,33 @@ function watchChannel(socket) {
                     if (false) {}
 
                     _context5.next = 9;
-                    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["take"])(_actions__WEBPACK_IMPORTED_MODULE_2__["DISCONNECT_CHANNEL"]);
+                    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["take"])([_ducks_chatroom__WEBPACK_IMPORTED_MODULE_3__["DISCONNECT_CHATROOM"], _ducks_auth__WEBPACK_IMPORTED_MODULE_2__["DISCONNECT_SOCKET"]]);
 
                   case 9:
                     action_disconnect = _context5.sent;
 
-                    if (!(action.channel == action_disconnect.channel)) {
-                      _context5.next = 13;
+                    if (!(action.type == _ducks_auth__WEBPACK_IMPORTED_MODULE_2__["DISCONNECT_SOCKET"])) {
+                      _context5.next = 15;
                       break;
                     }
 
                     Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["cancel"])(loopChannel);
-                    return _context5.abrupt("break", 15);
+                    return _context5.abrupt("break", 20);
 
-                  case 13:
+                  case 15:
+                    if (!(action.channel == action_disconnect.channel)) {
+                      _context5.next = 18;
+                      break;
+                    }
+
+                    Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["cancel"])(loopChannel);
+                    return _context5.abrupt("break", 20);
+
+                  case 18:
                     _context5.next = 6;
                     break;
 
-                  case 15:
+                  case 20:
                   case "end":
                     return _context5.stop();
                 }
@@ -1853,7 +2029,7 @@ function watchChannel(socket) {
             }, handleSocket);
           }));
 
-        case 3:
+        case 2:
         case "end":
           return _context6.stop();
       }
@@ -1861,14 +2037,30 @@ function watchChannel(socket) {
   }, _marked4);
 }
 
-function watchUserInfo(channel) {
+function watchForSendInfoQuery(channel) {
   var sagachannel;
-  return regeneratorRuntime.wrap(function watchUserInfo$(_context8) {
+  return regeneratorRuntime.wrap(function watchForSendInfoQuery$(_context8) {
     while (1) {
       switch (_context8.prev = _context8.next) {
         case 0:
-          sagachannel = createSocketChannel(socketchannel);
-          _context8.next = 3;
+          sagachannel = createSocketChannel(channel, {
+            'create_room_success': function create_room_success(emit, payload) {
+              console.log(payload);
+              emit({
+                type: _ducks_chatroom__WEBPACK_IMPORTED_MODULE_3__["CONNECT_CHATROOM"],
+                channel: "room:".concat(payload.channel.idx)
+              });
+            },
+            'req_profile_success': function req_profile_success(emit, payload) {
+              console.log(payload);
+              emit({
+                type: _ducks_auth__WEBPACK_IMPORTED_MODULE_2__["GET_INFO_USER_SUCCESS"],
+                user: payload.user
+              });
+            }
+          }, function () {});
+          console.log("watchForSendInfoQuery");
+          _context8.next = 4;
           return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["takeEvery"])(sagachannel,
           /*#__PURE__*/
           regeneratorRuntime.mark(function eachmessage(payload) {
@@ -1876,9 +2068,10 @@ function watchUserInfo(channel) {
               while (1) {
                 switch (_context7.prev = _context7.next) {
                   case 0:
-                    console.log(payload);
+                    _context7.next = 2;
+                    return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["put"])(payload);
 
-                  case 1:
+                  case 2:
                   case "end":
                     return _context7.stop();
                 }
@@ -1886,7 +2079,7 @@ function watchUserInfo(channel) {
             }, eachmessage);
           }));
 
-        case 3:
+        case 4:
         case "end":
           return _context8.stop();
       }
@@ -1894,29 +2087,41 @@ function watchUserInfo(channel) {
   }, _marked5);
 }
 
-function watchSendUserInfo(channel) {
+function watchForReceiveInfoQuery(channel) {
   var payload;
-  return regeneratorRuntime.wrap(function watchSendUserInfo$(_context9) {
+  return regeneratorRuntime.wrap(function watchForReceiveInfoQuery$(_context9) {
     while (1) {
       switch (_context9.prev = _context9.next) {
         case 0:
           if (false) {}
 
           _context9.next = 3;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["take"])(_actions__WEBPACK_IMPORTED_MODULE_2__["SEND_MESSAGE"]);
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["take"])([_ducks_chatroom__WEBPACK_IMPORTED_MODULE_3__["CREATE_CHATROOM"], "req_profile"]);
 
         case 3:
           payload = _context9.sent;
           _context9.prev = 4;
           _context9.next = 7;
           return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["call"])(function (args) {
-            channel.push(payload.event, payload.message, 10000).receive("ok", function (msg) {
-              return console.log("created message", msg);
-            }).receive("error", function (reasons) {
-              return console.log("create failed", reasons);
-            }).receive("timeout", function () {
-              return console.log("Networking issue...");
-            });
+            if (payload.type == 'req_profile') {
+              channel.push("req_profile", null, 10000).receive("ok", function (payload) {
+                return _store_configureStore__WEBPACK_IMPORTED_MODULE_5__["default"].dispatch({
+                  type: _ducks_auth__WEBPACK_IMPORTED_MODULE_2__["GET_INFO_USER_SUCCESS"],
+                  user: payload.user
+                });
+              });
+            } else if (payload.type == _ducks_chatroom__WEBPACK_IMPORTED_MODULE_3__["CREATE_CHATROOM"]) {
+              channel.push("create_chatroom", {
+                channel: payload.channel
+              }, 10000).receive("ok", function (payload) {
+                return _store_configureStore__WEBPACK_IMPORTED_MODULE_5__["default"].dispatch({
+                  type: _ducks_chatroom__WEBPACK_IMPORTED_MODULE_3__["CONNECT_CHATROOM"],
+                  channel: "room:".concat(payload.channel.idx)
+                });
+              });
+            } else {
+              channel.push(payload.event, payload.message, 10000);
+            }
           }, payload);
 
         case 7:
@@ -1940,39 +2145,21 @@ function watchSendUserInfo(channel) {
   }, _marked6, null, [[4, 9]]);
 }
 
-function reqUserInfo(socket) {
-  var channel, loopChannel;
-  return regeneratorRuntime.wrap(function reqUserInfo$(_context10) {
+function runLoopwatchInfoQuery(channel) {
+  return regeneratorRuntime.wrap(function runLoopwatchInfoQuery$(_context10) {
     while (1) {
       switch (_context10.prev = _context10.next) {
         case 0:
-          channel = socket.channel("setting");
-          channel.join().receive("ok", function (_ref3) {
-            var messages = _ref3.messages;
-            return console.log("catching up", messages);
-          }).receive("error", function (_ref4) {
-            var reason = _ref4.reason;
-            return console.log("failed join", reason);
-          }).receive("timeout", function () {
-            return console.log("Networking issue. Still waiting...");
-          });
-          channel.push("req_profile", null, 10000).receive("ok", function (msg) {
-            _store_configureStore__WEBPACK_IMPORTED_MODULE_4__["default"].dispatch({
-              type: _actions__WEBPACK_IMPORTED_MODULE_2__["GET_INFO_USER_SUCCESS"],
-              user: msg.user
-            });
-          }).receive("error", function (reasons) {
-            return console.log("create failed", reasons);
-          }).receive("timeout", function () {
-            return console.log("Networking issue...");
-          });
-          _context10.next = 5;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["call"])(runLoop, channel);
+          if (false) {}
+
+          _context10.next = 3;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["all"])([watchForSendInfoQuery(channel), watchForReceiveInfoQuery(channel)]);
+
+        case 3:
+          _context10.next = 0;
+          break;
 
         case 5:
-          loopChannel = _context10.sent;
-
-        case 6:
         case "end":
           return _context10.stop();
       }
@@ -1980,53 +2167,29 @@ function reqUserInfo(socket) {
   }, _marked7);
 }
 
-function rootSocket() {
-  var payload, socket, loopWatchSocket;
-  return regeneratorRuntime.wrap(function rootSocket$(_context11) {
+function watchInfoQuery(socket) {
+  var channel, joined;
+  return regeneratorRuntime.wrap(function watchInfoQuery$(_context11) {
     while (1) {
       switch (_context11.prev = _context11.next) {
         case 0:
-          _context11.next = 2;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["take"])(_actions__WEBPACK_IMPORTED_MODULE_2__["CONNECT_SOCKET"]);
+          channel = socket.channel("setting");
+          _context11.next = 3;
+          return channel.join();
 
-        case 2:
-          payload = _context11.sent;
-          socket = new phoenix__WEBPACK_IMPORTED_MODULE_0__["Socket"]("/socket", {
-            params: {
-              username: payload.username
-            }
-          });
-          socket.connect();
+        case 3:
+          joined = _context11.sent;
+          console.log(joined);
           _context11.next = 7;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["put"])({
-            type: _actions__WEBPACK_IMPORTED_MODULE_2__["CONNECT_SUCCESS"]
-          });
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["fork"])(runLoopwatchInfoQuery, channel);
 
         case 7:
           _context11.next = 9;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["spawn"])(watchChannel, socket);
-
-        case 9:
-          loopWatchSocket = _context11.sent;
-          _context11.next = 12;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["fork"])(reqUserInfo, socket);
-
-        case 12:
-          _context11.next = 14;
           return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["put"])({
-            type: _actions__WEBPACK_IMPORTED_MODULE_2__["CONNECT_CHANNEL"],
-            channel: "room:lobby"
+            type: 'req_profile'
           });
 
-        case 14:
-          _context11.next = 16;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["take"])(_actions__WEBPACK_IMPORTED_MODULE_2__["DISCONNECT_SOCKET"]);
-
-        case 16:
-          _context11.next = 18;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["cancel"])(loopWatchSocket);
-
-        case 18:
+        case 9:
         case "end":
           return _context11.stop();
       }
@@ -2034,11 +2197,57 @@ function rootSocket() {
   }, _marked8);
 }
 
-function rootAPI() {
-  return regeneratorRuntime.wrap(function rootAPI$(_context12) {
+function rootSocket() {
+  var payload, socket, loopWatchSocket, watchUserInfo;
+  return regeneratorRuntime.wrap(function rootSocket$(_context12) {
     while (1) {
       switch (_context12.prev = _context12.next) {
         case 0:
+          _context12.next = 2;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["take"])(_ducks_auth__WEBPACK_IMPORTED_MODULE_2__["CONNECT_SOCKET"]);
+
+        case 2:
+          payload = _context12.sent;
+          socket = new phoenix__WEBPACK_IMPORTED_MODULE_0__["Socket"]("/socket", {
+            params: {
+              username: payload.username
+            }
+          });
+          socket.connect();
+          _context12.next = 7;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["put"])({
+            type: _ducks_auth__WEBPACK_IMPORTED_MODULE_2__["CONNECT_SUCCESS"]
+          });
+
+        case 7:
+          _context12.next = 9;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["spawn"])(watchChatChannel, socket);
+
+        case 9:
+          loopWatchSocket = _context12.sent;
+          _context12.next = 12;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["fork"])(watchInfoQuery, socket);
+
+        case 12:
+          watchUserInfo = _context12.sent;
+          _context12.next = 15;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["take"])(_ducks_auth__WEBPACK_IMPORTED_MODULE_2__["DISCONNECT_SOCKET"]);
+
+        case 15:
+          _context12.next = 17;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["cancel"])(loopWatchSocket);
+
+        case 17:
+          _context12.next = 19;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["cancel"])(watchUserInfo);
+
+        case 19:
+          console.log("disconnect");
+          socket.disconnect(function () {
+            console.log("disconnect success");
+          });
+
+        case 21:
         case "end":
           return _context12.stop();
       }
@@ -2046,24 +2255,36 @@ function rootAPI() {
   }, _marked9);
 }
 
-function rootSaga() {
-  return regeneratorRuntime.wrap(function rootSaga$(_context13) {
+function rootAPI() {
+  return regeneratorRuntime.wrap(function rootAPI$(_context13) {
     while (1) {
       switch (_context13.prev = _context13.next) {
         case 0:
-          _context13.next = 2;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["spawn"])(rootSocket);
-
-        case 2:
-          _context13.next = 4;
-          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["fork"])(rootAPI);
-
-        case 4:
         case "end":
           return _context13.stop();
       }
     }
   }, _marked10);
+}
+
+function rootSaga() {
+  return regeneratorRuntime.wrap(function rootSaga$(_context14) {
+    while (1) {
+      switch (_context14.prev = _context14.next) {
+        case 0:
+          _context14.next = 2;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["spawn"])(rootSocket);
+
+        case 2:
+          _context14.next = 4;
+          return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_1__["fork"])(rootAPI);
+
+        case 4:
+        case "end":
+          return _context14.stop();
+      }
+    }
+  }, _marked11);
 }
 
 /***/ }),

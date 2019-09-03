@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import Dashboard from './Dashboard';
 import Login from './Login';
-import { DisconnectSocket } from '../actions/index'
+import { DisconnectSocket } from '../ducks/auth'
 class App extends Component {
 
     componentDidMount()

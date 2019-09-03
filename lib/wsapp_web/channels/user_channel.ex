@@ -6,17 +6,18 @@ defmodule WsappWeb.UserChannel do
     {:ok, %{user: socket.assigns.current_user}, socket}
   end
 
-  def join("room:" <> _private_room_id, _params, _socket) do
-    {:error, %{reason: "unauthorized"}}
+  def join("room:" <> private_room_id, _params, socket) do
+    case WsappWeb.RoomStore.lookup_room(private_room_id) do
+      :error ->
+        {:error, %{reason: "room not exists"}}
+
+      {:ok, room} ->
+        {:ok, %{"room" => room}, socket}
+    end
   end
 
   def handle_in("msg", %{"hello" => hello}, socket) do
     broadcast!(socket, "msg", %{hello: hello})
     {:noreply, socket}
-  end
-
-  def handle_in("req_profile", _params, socket) do
-
-    {:reply, %{user: socket.assigns.current_user},socket}
   end
 end

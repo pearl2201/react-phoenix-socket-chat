@@ -46,7 +46,8 @@ defmodule WsappWeb.RoomStore do
   end
 
   def lookup_room(room_id) do
-    case :ets.lookup(@server, room_id) do
+    room_id = String.to_integer(room_id)
+    case :ets.lookup(@server,room_id ) do
       [{^room_id, room}] -> {:ok, room}
       [] -> :error
     end
@@ -56,7 +57,7 @@ defmodule WsappWeb.RoomStore do
     idx = 1
     room = %{idx: idx, name: room_name, members: [creator_id], creator_id: creator_id}
     :ets.insert(rooms, {idx, room})
-
+    IO.inspect(room)
     {:reply, room, {rooms, [idx]}}
   end
 
@@ -64,7 +65,7 @@ defmodule WsappWeb.RoomStore do
     idx = head + 1
     room = %{idx: idx, name: room_name, members: [creator_id]}
     :ets.insert(rooms, {idx, room})
-
+    IO.inspect(room)
     {:reply, room, {rooms, [idx | idxs]}}
   end
 
